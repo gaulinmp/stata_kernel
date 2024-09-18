@@ -1,5 +1,3 @@
 """An example Jupyter kernel"""
 
-__version__ = '1.11.2'
-
-from .kernel import StataKernel
+__version__ = '1.13.0'

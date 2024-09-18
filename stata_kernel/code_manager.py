@@ -295,15 +295,15 @@ class CodeManager():
         if not pdf_dup:
             g_exp = dedent("""
             if _rc == 0 {{
-                noi gr export {0}/graph${1}.{2},{3} replace
+                noi gr export `"{0}/graph${1}.{2}"',{3} replace
                 global {1} = ${1} + 1
             }}\
             """.format(cache_dir_str, gph_cnt, graph_fmt, dim_str))
         else:
             g_exp = dedent("""
             if _rc == 0 {{
-                noi gr export {0}/graph${1}.{2},{3} replace
-                noi gr export {0}/graph${1}.pdf, replace
+                noi gr export `"{0}/graph${1}.{2}"',{3} replace
+                noi gr export `"{0}/graph${1}.pdf"', replace
                 global {1} = ${1} + 1
             }}\
             """.format(cache_dir_str, gph_cnt, graph_fmt, dim_str))
@@ -329,7 +329,7 @@ class CodeManager():
         if use_include:
             with (cache_dir / 'include.do').open('w', encoding='utf-8') as f:
                 f.write(text + '\n')
-            text = "include {}/include.do".format(cache_dir_str)
+            text = 'include "{}/include.do"'.format(cache_dir_str)
             text_to_exclude = text + '\n' + text_to_exclude
 
         text += "\n`{}'".format(hash_text)

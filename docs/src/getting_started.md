@@ -26,7 +26,14 @@ It doesn't take much to get `stata_kernel` up and running. Here's how:
 
 ## Package Install
 
-To install the kernel, from a terminal or command prompt run:
+If you use Anaconda or Miniconda, from the Anaconda Prompt run:
+
+```bash
+conda install -c conda-forge stata_kernel
+python -m stata_kernel.install
+```
+
+If you do not use Anaconda/Miniconda, from a terminal or command prompt run:
 
 ```bash
 pip install stata_kernel
@@ -34,10 +41,37 @@ python -m stata_kernel.install
 ```
 
 If Python 2 is the default version of Python on your system, you may need to use
+`python3` instead of `python` for the `python3 -m stata_kernel.install` step.
+
+### Jupyter
+
+If you chose to install Anaconda you already have [Jupyter Notebook](https://jupyter-notebook.readthedocs.io/en/stable/notebook.html) and [Jupyter Lab](https://jupyterlab.readthedocs.io/en/stable/getting_started/overview.html) installed.
+
+Otherwise, you need to install Jupyter Notebook or Jupyter Lab. I recommend the latter as it is a similar but more modern environment. If you have Miniconda, open the Anaconda Prompt and run:
+
 ```bash
-pip3 install stata_kernel
-python3 -m stata_kernel.install
+conda install jupyterlab
 ```
+
+If you use pip, you can install it via:
+
+```bash
+pip install jupyterlab
+```
+
+If you would not like to install Jupyter Lab and only need the Notebook, you can install it by running
+
+```bash
+conda install notebook
+```
+
+or
+
+```bash
+pip install notebook
+```
+
+depending on your package manager.
 
 In order to get syntax highlighting in Jupyter Lab, run:
 ```bash
@@ -45,15 +79,21 @@ conda install -c conda-forge nodejs -y
 jupyter labextension install jupyterlab-stata-highlight
 ```
 
-If you didn't install Python from Anaconda, the `conda` command won't work and you'll need to install [Node.js](https://nodejs.org/en/download/) directly before running `jupyter labextension install`.
+If you didn't install Python from Anaconda/Miniconda, the `conda` command won't work and you'll need to install [Node.js](https://nodejs.org/en/download/) directly before running `jupyter labextension install`.
 
 ### Upgrading
 
 To upgrade from a previous version of `stata_kernel`, from a terminal or command prompt run
 
+```bash
+conda update stata_kernel -y
 ```
+in the case of Anaconda/Miniconda or
+
+```bash
 pip install stata_kernel --upgrade
 ```
+otherwise.
 
 When upgrading, you don't have to run `python -m stata_kernel.install` again.
 

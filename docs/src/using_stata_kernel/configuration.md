@@ -1,7 +1,9 @@
 # Configuration
 
 The configuration file is a plain text file named `.stata_kernel.conf` and is
-located in your home directory. You can change any of the package's settings by
+located in your home directory, or defined by the environmental variable
+`STATA_KERNEL_USER_CONFIG_PATH`. Settings must be under the heading
+`[stata_kernel]`. You can change any of the package's settings by
 opening the file and changing the `value` of any line of the form
 
 ```
@@ -22,9 +24,10 @@ If you want these changes to be stored permanently, add `--permanently`:
 
 !!! info "System wide configuration file for JupyterHub"
 
-    If you are installign `stata_kernel` in Jupyter Hub you must create a system
-    wide configuration file in `/etc/stata_kernel.conf` to provide default
-    values.
+    If you are installing `stata_kernel` in Jupyter Hub you must create a system
+    wide configuration file to provide default values. The default location
+    is in `/etc/stata_kernel.conf`, or defined by the environmental variable
+    `STATA_KERNEL_GLOBAL_CONFIG_PATH`.
 
 ## General settings
 
@@ -85,7 +88,11 @@ These settings determine how graphs are displayed internally. [Read here](intro.
 
 ### `graph_format`
 
-`svg` or `png`, the format to export and display graphs. By default this is `svg` for most operating systems and versions of Stata, but is `png` by default for Windows on Stata 14 and below.
+`svg`, `png` or `eps`; the format to export graphs. By default this is `svg` for most operating systems and versions of Stata, but is `png` by default for Windows on Stata 14 and below. Note `eps` cannot be displayed by kernel front-ends and requires converting to `png` via `graph_epstopng_program`.
+
+### `graph_epstopng_program`
+
+With `graph_format = eps`, a program to convert `eps` figures to `png` so they can be displayed by the kernel front-end. For example, on Linux the user can specify `graph_epstopng_program = convert -density 300 {0} -resize '900x600' {1}`.  (Note the name of the temporary graph files are passed to the program and the user must take that into account.)
 
 ### `graph_scale`
 
@@ -130,3 +137,18 @@ For more information about what _Graph Redundancy_ is, [read here](intro.md#grap
 
 Whether to provide redundant PDF images when `png` is the display format. `False` by default.
 For more information about what _Graph Redundancy_ is, [read here](intro.md#graph-redundancy).
+
+## Example config file
+
+An example config file:
+
+``` ini
+[stata_kernel]
+stata_path = "C:\Program Files\Stata16\StataMP-64.exe"
+execution_mode = automation
+cache_directory = ~/.stata_kernel_cache
+autocomplete_closing_symbol = False
+graph_format = svg
+graph_scale = 1
+user_graph_keywords = coefplot,vioplot
+```
